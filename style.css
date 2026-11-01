@@ -1,0 +1,809 @@
+/* =====================================================================
+   COMO LER ESTE ARQUIVO
+   ---------------------------------------------------------------------
+   O CSS é feito de "regras". Cada regra tem:
+     seletor { propriedade: valor; }
+   - seletor      = QUEM vai ser estilizado (ex: .btn = todo elemento com class="btn")
+   - propriedade  = O QUE vai mudar (ex: color = cor do texto)
+   - valor        = COMO vai ficar (ex: #ffffff)
+
+   O arquivo segue a mesma ordem da página, de cima para baixo:
+     1. CORES E MEDIDAS (para mudar o site inteiro de uma vez)
+     2. CONFIGURAÇÕES GERAIS
+     3. CABEÇALHO E MENU
+     4. SEÇÕES, TÍTULOS E BOTÕES (usados em várias partes)
+     5. SEÇÃO 1 - INÍCIO
+     6. SEÇÃO 2 - SOBRE
+     7. SEÇÃO 3 - ÁREAS DE ATUAÇÃO
+     8. SEÇÃO 4 - NOSSO COMPROMISSO
+     9. SEÇÃO 5 - RODAPÉ
+    10. ANIMAÇÃO DE ENTRADA
+    11. TABLET E COMPUTADOR
+
+   CORES: todas em hexadecimal (#).
+     #RRGGBB   = cor normal (ex: #0E284E é o azul-marinho)
+     #RRGGBBAA = cor transparente. Os 2 últimos dígitos são a transparência:
+                 ff = 100% visível | cc = 80% | 80 = 50% | 33 = 20% | 00 = invisível
+   A única exceção é o degradê sobre a foto do início (linear-gradient).
+
+   RESPONSIVO (MOBILE FIRST): as regras de cada bloco valem primeiro para
+   o CELULAR. No bloco 11 estão os ajustes para telas maiores.
+
+   DICA: use Ctrl+F e procure o número ou o nome do bloco que quer mexer.
+   ===================================================================== */
+
+
+/* =====================================================================
+   1. CORES E MEDIDAS
+   Aqui ficam as "variáveis". Mude uma vez e muda no site todo.
+   Para usar uma variável no código, escreva: var(--nome)
+   ===================================================================== */
+/* ----- FONTE DO SITE: Product Sans -----
+   "@font-face" ensina o navegador onde estão os arquivos da fonte.
+   Os arquivos ficam na pasta "fontes". Só existem 2 pesos: normal e negrito.
+   Quando um texto pede um peso intermediário, o navegador usa o mais próximo. */
+@font-face {
+  font-family: 'Product Sans';
+  src: url("fontes/Product_Sans_Regular.ttf") format("truetype");
+  font-weight: 400;              /* normal */
+  font-style: normal;
+  font-display: swap;            /* mostra o texto logo, sem esperar a fonte carregar */
+}
+@font-face {
+  font-family: 'Product Sans';
+  src: url("fontes/Product_Sans_Bold.ttf") format("truetype");
+  font-weight: 700;              /* negrito */
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* ----- PALETA DO SITE -----
+     Atenção: os nomes (verde, cinza...) vieram do site antigo.
+     Agora o valor é que manda:
+       --verde        = tom CLARO (fundo das seções claras, botão, textos sobre o azul)
+       --verde-escuro = AZUL-MARINHO (fundo das seções escuras, textos sobre o claro)  */
+  --verde: #e1e3f2;
+  --verde-escuro: #0E284E;
+  --cinza-claro: #0E284E;
+  --texto: #e1e3f2;
+
+  /* ----- VARIAÇÕES TRANSPARENTES DAS MESMAS DUAS CORES ----- */
+  --linha-clara: #e1e3f233;        /* linhas finas sobre fundo azul */
+  --linha-escura: #0E284E33;       /* linhas finas sobre fundo claro */
+  --texto-suave-claro: #e1e3f2cc;  /* texto secundário sobre fundo azul */
+  --texto-suave-escuro: #0E284Ecc; /* texto secundário sobre fundo claro */
+
+  /* ----- FONTE (definida no @font-face logo acima) ----- */
+  --fonte: 'Product Sans', system-ui, sans-serif;
+
+  /* ----- MEDIDAS ----- */
+  --altura-menu: 72px;           /* altura da barra do topo */
+  --arredondado: 32px;           /* quão redondos são os cantos das seções */
+  --suave: cubic-bezier(.22, .8, .24, 1);  /* jeito como as animações se movem */
+}
+
+
+/* =====================================================================
+   2. CONFIGURAÇÕES GERAIS
+   Regras que valem para a página inteira.
+   ===================================================================== */
+
+/* Zera as margens e espaços que o navegador coloca sozinho */
+*, *::before, *::after {
+  box-sizing: border-box;   /* o tamanho do elemento já inclui borda e espaço interno */
+  margin: 0;
+  padding: 0;
+}
+
+/* Rolagem suave ao clicar nos links do menu.
+   scroll-padding-top = deixa um espaço no topo para a barra fixa não cobrir o título */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--altura-menu);
+}
+
+/* Estilo da página inteira */
+body {
+  font-family: var(--fonte);
+  background: var(--verde-escuro);
+  color: var(--texto);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Quando o menu do celular está aberto, a página de trás não rola */
+body.menu-aberto {
+  overflow: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+img { display: block; max-width: 100%; height: auto; }
+address { font-style: normal; }
+button { font: inherit; color: inherit; cursor: pointer; }
+
+/* "Caixa" que centraliza o conteúdo e limita a largura */
+.container {
+  width: min(1000px, 88%);   /* no máximo 1000px, ou 88% da tela se for menor */
+  margin-inline: auto;
+}
+
+/* Contorno visível quando se navega pelo teclado (acessibilidade) */
+:focus-visible {
+  outline: 2px solid var(--verde);
+  outline-offset: 3px;
+}
+.section--light :focus-visible {
+  outline-color: var(--verde-escuro);
+}
+
+/* Link invisível que só aparece ao apertar Tab (pula direto para o conteúdo) */
+.pular-menu {
+  position: absolute;
+  left: 12px;
+  top: -60px;
+  z-index: 300;
+  background: var(--verde);
+  color: var(--verde-escuro);
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+.pular-menu:focus { top: 12px; }
+
+
+/* =====================================================================
+   3. CABEÇALHO E MENU
+   - Celular e tablet: logo + botão hambúrguer. O menu abre num painel lateral.
+   - Computador: logo + links lado a lado (sem hambúrguer).
+   ===================================================================== */
+
+/* Barra do topo, fixa na tela (acompanha a rolagem) */
+.header {
+  position: fixed;               /* fica parada no topo */
+  inset: 0 0 auto 0;             /* cola no topo, esquerda e direita */
+  z-index: 100;                  /* fica na frente de tudo */
+  height: var(--altura-menu);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;   /* logo num lado, hambúrguer no outro */
+  padding-inline: max(6%, 24px);    /* espaço nas laterais */
+  background: #0E284Ecc;         /* azul-marinho um pouco transparente */
+  backdrop-filter: blur(10px);   /* desfoca o que passa por trás da barra */
+  border-bottom: 1px solid var(--linha-clara);
+  transition: background .3s;
+}
+
+/* Depois que rola a página, o JavaScript adiciona esta classe:
+   a barra fica um pouco mais "sólida" */
+.header.is-scrolled {
+  background: #0E284Ee6;
+}
+
+/* Logo */
+.logo img {
+  height: 46px;
+  width: auto;
+}
+
+/* ----- Botão hambúrguer (só aparece no celular e tablet) ----- */
+.menu-botao {
+  width: 46px;
+  height: 46px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 1px solid var(--linha-clara);
+  border-radius: 8px;
+  transition: background .25s, border-color .25s;
+}
+.menu-botao:hover {
+  background: #e1e3f21a;
+  border-color: #e1e3f266;
+}
+
+/* Cada risquinho do hambúrguer */
+.menu-botao__linha {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--verde);
+  border-radius: 2px;
+}
+
+/* ----- Fundo escuro atrás do menu aberto ----- */
+.menu-fundo {
+  position: fixed;
+  inset: 0;
+  z-index: 110;
+  background: #0714299e;
+  opacity: 0;
+  transition: opacity .35s;
+}
+.menu-fundo.is-aberto { opacity: 1; }
+
+/* ----- Painel do menu (celular e tablet) ----- */
+.menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 120;
+  width: min(340px, 86vw);
+  display: flex;
+  flex-direction: column;
+  padding: calc(var(--altura-menu) + 24px) 28px 32px;
+  background: var(--verde-escuro);
+  border-left: 1px solid var(--linha-clara);
+  overflow-y: auto;
+  /* Começa escondido para fora da tela, à direita */
+  transform: translateX(100%);
+  visibility: hidden;
+  transition: transform .4s var(--suave), visibility 0s .4s;
+}
+
+/* Quando o JavaScript adiciona "is-aberto", o menu desliza para dentro */
+.menu.is-aberto {
+  transform: translateX(0);
+  visibility: visible;
+  transition: transform .4s var(--suave), visibility 0s 0s;
+}
+
+/* Botão X para fechar (fica no mesmo lugar do hambúrguer) */
+.menu__fechar {
+  position: absolute;
+  top: calc((var(--altura-menu) - 46px) / 2);
+  right: max(6%, 24px);
+  width: 46px;
+  height: 46px;
+  background: none;
+  border: 1px solid var(--linha-clara);
+  border-radius: 8px;
+}
+.menu__fechar span {
+  position: absolute;
+  left: 11px;
+  top: 21px;
+  width: 22px;
+  height: 2px;
+  background: var(--verde);
+}
+.menu__fechar span:first-child { transform: rotate(45deg); }
+.menu__fechar span:last-child  { transform: rotate(-45deg); }
+
+/* Lista de links */
+.menu__lista {
+  display: grid;
+  gap: 4px;
+}
+.menu__link {
+  display: block;
+  padding: 14px 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--texto-suave-claro);
+  border-bottom: 1px solid var(--linha-clara);
+  transition: color .25s, padding-left .25s var(--suave);
+}
+.menu__link:hover,
+.menu__link[aria-current="true"] {
+  color: var(--verde);
+  padding-left: 10px;           /* o link "anda" um pouco para a direita */
+}
+
+
+/* =====================================================================
+   4. SEÇÕES, TÍTULOS E BOTÕES (usados em várias partes)
+   ===================================================================== */
+
+/* Regras que TODAS as seções têm */
+.section {
+  position: relative;
+  padding: 96px 0 80px;
+  border-radius: 0 0 var(--arredondado) var(--arredondado);  /* só os cantos de baixo redondos */
+  box-shadow: 0 30px 40px -20px #00000040;                   /* sombra embaixo */
+}
+
+/* As 2 cores de fundo possíveis para uma seção */
+.section--light { background: var(--verde); color: var(--verde-escuro); }  /* clara, texto azul */
+.section--dark  { background: var(--verde-escuro); color: var(--texto); }  /* azul, texto claro */
+
+/* Divide o conteúdo em 2 colunas (esquerda e direita) */
+.two-cols {
+  display: grid;
+  gap: 40px;                     /* no celular: uma embaixo da outra */
+  align-items: start;
+}
+.two-cols--center { align-items: center; }
+
+/* ----- Títulos ----- */
+.titulo {
+  font-size: clamp(1.6rem, 4.5vw, 2.2rem);   /* tamanho que se ajusta à tela (mín, ideal, máx) */
+  font-weight: 800;
+  line-height: 1.25;
+}
+.titulo--branco { color: #ffffff; font-weight: 700; }   /* título branco */
+.titulo--centro { text-align: center; }                 /* título centralizado */
+
+/* ----- Botões ----- */
+
+/* Regras comuns a todos os botões */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 24px;            /* espaço dentro do botão */
+  border-radius: 10px;           /* cantos arredondados */
+  font-weight: 700;
+  font-size: .85rem;
+  transition: transform .25s var(--suave), box-shadow .25s var(--suave), background .25s;
+}
+
+/* Quando passa o mouse: o botão sobe e ganha sombra */
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px -8px #00000059;
+}
+
+/* Botão claro com texto azul (para fundos azuis) */
+.btn--claro { background: var(--verde); color: var(--verde-escuro); }
+.btn--claro:hover { background: #ffffff; }
+
+/* Ícone do WhatsApp dentro do botão */
+.icone-whatsapp {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+  flex: none;
+}
+
+
+/* =====================================================================
+   5. SEÇÃO 1 - INÍCIO (imagem de fundo + nome + botão + áreas)
+   ===================================================================== */
+.hero {
+  min-height: 100vh;
+  min-height: 100svh;            /* altura da tela inteira (versão certa para celular) */
+  display: flex;
+  align-items: center;           /* centraliza o conteúdo na vertical */
+  padding: calc(var(--altura-menu) + 40px) 0 72px;
+
+  /* Imagem de fundo com um degradê azul por cima.
+     O degradê escurece a foto e garante que o texto fique legível. */
+  background:
+    linear-gradient(180deg, #0E284Ef0 0%, #0E284Ed9 55%, #0E284Ef2 100%),
+    url("assets/hero-estante.jpg") center / cover no-repeat;
+  background-color: var(--verde-escuro);
+}
+
+/* Divide em 2 partes: texto e caixa com as áreas */
+.hero__grid {
+  display: grid;
+  gap: 44px;                     /* no celular: uma embaixo da outra */
+  align-items: center;
+}
+
+/* Título: o nome grande, e o nome do escritório menor logo abaixo */
+.hero__nome {
+  display: block;
+  font-size: clamp(2.4rem, 8vw, 3.2rem);
+  font-weight: 800;
+  line-height: 1.1;
+}
+.hero__escritorio {
+  display: block;
+  margin-top: 8px;
+  font-size: clamp(1.05rem, 3.4vw, 1.4rem);
+  font-weight: 600;
+  color: var(--texto-suave-claro);
+}
+
+/* Frase abaixo do título */
+.hero__sub {
+  margin: 22px 0 28px;
+  max-width: 340px;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+/* Caixa com borda e a lista das 3 áreas */
+.check-box {
+  border: 2px solid var(--verde);
+  border-radius: 18px;
+  padding: 28px 24px;
+  display: grid;
+  gap: 24px;                     /* espaço entre os itens */
+  max-width: 360px;
+  width: 100%;
+  justify-self: start;
+}
+
+/* Cada item da lista (ícone + texto lado a lado) */
+.check-box li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 700;
+  font-size: .9rem;
+}
+
+/* O círculo do ícone de "check" */
+.check {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid var(--verde);
+  position: relative;
+}
+
+/* O "visto" desenhado dentro do círculo */
+.check::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 2px;
+  width: 4px;
+  height: 8px;
+  border: solid var(--verde);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+
+/* =====================================================================
+   6. SEÇÃO 2 - SOBRE (foto + texto do advogado)
+   ===================================================================== */
+
+/* Foto sem moldura, só com os cantos arredondados */
+.sobre__foto {
+  width: 100%;
+  max-width: 420px;
+  margin-inline: auto;
+}
+.sobre__foto img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;             /* a foto preenche o espaço sem distorcer */
+  object-position: 50% 20%;
+  border-radius: 14px;
+}
+
+.sobre__texto p {
+  margin-top: 16px;
+  max-width: 52ch;
+  font-size: .95rem;
+}
+
+/* Linha "Advogado e fundador do escritório" */
+.sobre__texto .sobre__cargo {
+  margin-top: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--texto-suave-escuro);
+}
+
+
+/* =====================================================================
+   7. SEÇÃO 3 - ÁREAS DE ATUAÇÃO (3 cards)
+   ===================================================================== */
+.areas__intro {
+  margin-top: 12px;
+  max-width: 520px;
+  font-size: .95rem;
+  color: var(--texto-suave-claro);
+}
+
+/* No celular: cards um embaixo do outro */
+.cards {
+  margin-top: 40px;
+  display: grid;
+  gap: 14px;
+}
+
+/* Cada card: caixa com borda fininha */
+.card {
+  border: 1px solid #ffffff1f;
+  border-radius: 8px;
+  padding: 20px 20px 22px;
+  transition: border-color .3s, transform .3s var(--suave), background .3s;
+}
+
+/* Passar o mouse: a borda clareia e o card sobe */
+.card:hover {
+  border-color: #e1e3f280;
+  transform: translateY(-4px);
+  background: #ffffff08;
+}
+
+/* Ícone de linha fina */
+.card__icone {
+  width: 30px;
+  height: 30px;
+  margin-bottom: 14px;
+  fill: none;
+  stroke: var(--verde);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Nome da área */
+.card h3 {
+  margin-bottom: 8px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+/* Descrição */
+.card p {
+  font-size: .82rem;
+  color: var(--texto-suave-claro);
+}
+
+
+/* =====================================================================
+   8. SEÇÃO 4 - NOSSO COMPROMISSO (6 caixas)
+   ===================================================================== */
+.compromisso__intro {
+  margin: 14px auto 0;
+  max-width: 560px;
+  text-align: center;
+  font-size: .95rem;
+  color: var(--texto-suave-escuro);
+}
+
+/* No celular: 1 coluna */
+.valores {
+  margin-top: 44px;
+  display: grid;
+  gap: 16px;
+}
+
+/* Cada caixa */
+.valor {
+  padding: 20px 22px;
+  border: 1px solid #0E284E1f;
+  border-radius: 8px;
+  transition: transform .25s var(--suave), border-color .25s, background .25s;
+}
+.valor:hover {
+  transform: translateY(-3px);
+  border-color: #0E284E80;
+  background: #ffffff80;
+}
+
+.valor h3 {
+  margin-bottom: 6px;
+  font-size: .95rem;
+  font-weight: 700;
+}
+.valor p {
+  font-size: .82rem;
+  color: var(--texto-suave-escuro);
+}
+
+
+/* =====================================================================
+   9. SEÇÃO 5 - RODAPÉ (logo, endereço e e-mail)
+   ===================================================================== */
+.footer {
+  padding: 72px 0 28px;
+  background: var(--verde-escuro);
+  color: var(--texto);
+  text-align: center;
+}
+
+.footer__logo {
+  width: 200px;
+  height: auto;
+  margin: 0 auto 44px;
+}
+
+/* Endereço e e-mail (no celular: um embaixo do outro) */
+.footer__info {
+  display: grid;
+  gap: 32px;
+  justify-items: center;
+  padding-bottom: 44px;
+}
+
+.footer__info h3 {
+  margin-bottom: 10px;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.footer__info address,
+.footer__email {
+  font-size: .9rem;
+  color: var(--texto-suave-claro);
+}
+.footer__email {
+  display: inline-block;
+  overflow-wrap: anywhere;       /* deixa o e-mail quebrar linha se faltar espaço */
+  transition: color .25s;
+}
+.footer__email:hover { color: #ffffff; }
+
+/* Link do Google Maps com ícone */
+.footer__mapa {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding-bottom: 3px;
+  border-bottom: 1px solid #e1e3f280;
+  font-size: .85rem;
+  font-weight: 600;
+  transition: color .25s, border-color .25s;
+}
+.footer__mapa:hover { color: #ffffff; border-color: var(--verde); }
+.footer__mapa svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Faixa final: direitos autorais */
+.footer__base {
+  padding-top: 24px;
+  border-top: 1px solid var(--linha-clara);
+  display: grid;
+  gap: 4px;
+  font-size: .8rem;
+  color: var(--texto-suave-claro);
+}
+
+
+/* =====================================================================
+   10. ANIMAÇÃO DE ENTRADA
+   Todo elemento com class="reveal" aparece suavemente quando chega na tela.
+   O JavaScript adiciona a classe "is-visible" na hora certa.
+   Se o JavaScript não carregar, os textos continuam visíveis.
+   ===================================================================== */
+
+/* Estado inicial (só se o JavaScript estiver funcionando): invisível */
+.js .reveal {
+  opacity: 0;
+}
+
+/* Quando chega na tela: fica visível e roda a animação "aparecer".
+   (animation-delay = atraso de cada item, definido pelo JavaScript) */
+.js .reveal.is-visible {
+  opacity: 1;
+  animation: aparecer .8s var(--suave) backwards;
+  animation-delay: var(--delay, 0s);
+}
+
+/* A animação: começa transparente, mais embaixo e desfocada */
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+    filter: blur(8px);
+  }
+}
+
+/* Para quem desativou animações no aparelho: mostra tudo direto */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .js .reveal,
+  .js .reveal.is-visible {
+    opacity: 1;
+    animation: none;
+  }
+  .menu, .menu-fundo, .btn, .menu__link { transition: none; }
+}
+
+
+/* =====================================================================
+   11. TABLET E COMPUTADOR
+   "@media (min-width: ...)" = regras que só valem quando a tela é MAIOR
+   que esse tamanho. Elas se somam às regras do celular.
+   ===================================================================== */
+
+/* ----- TABLET (a partir de 768px) ----- */
+@media (min-width: 768px) {
+
+  /* Cada seção ocupa pelo menos a altura da tela e centraliza o conteúdo */
+  .section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 110px 0 90px;
+  }
+  .section > .container { width: min(1000px, 88%); }
+
+  /* Início: texto à esquerda, caixa das áreas à direita */
+  .hero__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+  }
+  .check-box { justify-self: center; }
+
+  /* Sobre: foto de um lado, texto do outro */
+  .two-cols {
+    grid-template-columns: 1fr 1.1fr;
+    gap: 64px;
+  }
+  .sobre__foto { margin-inline: 0; }
+
+  /* Áreas: 3 cards lado a lado */
+  .cards { grid-template-columns: repeat(3, 1fr); }
+
+  /* Compromisso: 2 colunas */
+  .valores { grid-template-columns: repeat(2, 1fr); }
+
+  /* Rodapé: endereço e e-mail lado a lado */
+  .footer__info {
+    grid-template-columns: repeat(2, auto);
+    justify-content: center;
+    gap: 80px;
+  }
+}
+
+/* ----- COMPUTADOR (a partir de 1024px) ----- */
+@media (min-width: 1024px) {
+  :root { --altura-menu: 76px; }
+
+  .logo img { height: 52px; }
+
+  /* O MENU DEIXA DE SER PAINEL: os links ficam lado a lado no topo,
+     e o hambúrguer, o X e o fundo escuro somem. */
+  .menu-botao,
+  .menu__fechar,
+  .menu-fundo { display: none; }
+
+  .menu {
+    top: 0;
+    right: max(6%, 24px);
+    bottom: auto;
+    width: auto;
+    height: var(--altura-menu);
+    padding: 0;
+    flex-direction: row;
+    align-items: center;
+    background: none;
+    border: 0;
+    overflow: visible;
+    transform: none;
+    visibility: visible;
+    transition: none;
+  }
+  .menu__lista {
+    display: flex;
+    gap: 32px;
+  }
+  .menu__link {
+    padding: 6px 0;
+    font-size: .85rem;
+    font-weight: 600;
+    border-bottom: 2px solid transparent;
+  }
+  .menu__link:hover,
+  .menu__link[aria-current="true"] {
+    padding-left: 0;
+    border-bottom-color: var(--verde);
+  }
+
+  /* Início: foto mais aberta no lado direito */
+  .hero {
+    background:
+      linear-gradient(90deg, #0E284Ef2 0%, #0E284Ed9 45%, #0E284E99 100%),
+      url("assets/hero-estante.jpg") center / cover no-repeat;
+    background-color: var(--verde-escuro);
+  }
+
+  /* Compromisso: 3 colunas */
+  .valores { grid-template-columns: repeat(3, 1fr); }
+}

@@ -1,94 +1,221 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DS</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=menu" />
-    <link rel="stylesheet" href="estilos/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daniel Santos Advocacia e Assessoria Jurídica | Caririaçu - CE</title>
+  <meta name="description" content="Daniel Santos Advocacia e Assessoria Jurídica. Atendimento em Direito Civil, Direito do Consumidor e Direito Previdenciário em Caririaçu - CE.">
+  <meta name="theme-color" content="#0E284E">
+  <link rel="icon" type="image/png" href="assets/logo-ds (1).png">
+
+  <!-- Avisa o CSS que o JavaScript está funcionando (as animações só escondem os textos se o JS carregar) -->
+  <script>document.documentElement.classList.add('js');</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <img id="logo" src="assets/logoSF.png" alt="logo">
-        <span id="burguer" class="material-symbols-outlined" onclick="clickMenu()">menu</span>
-        <menu id="itens">
-            <ul>
-                <li><a href="#hero">Início</a></li>
-                <li><a href="#two">Escritório</a></li>
-                <li><a href="#">Áreas de Atuação</a></li>
-                <li><a href="#end">Contato</a></li>
-            </ul>
-        </menu>
-    </header>
 
-    <main>
-            <img src="assets/logoPP.jpg" alt="parede">
-           
-    </main>
+  <a href="#conteudo" class="pular-menu">Ir para o conteúdo</a>
 
-    <section class="flavour" id="two">
-        <h2>Flavour Update</h2>
-        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quas accusantium nemo suscipit voluptatibus amet. Animi ad qui sequi. Sed nihil assumenda fuga autem, reiciendis quisquam ab consequuntur. Voluptas, labore voluptatem? Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, doloremque. Mollitia, dicta possimus officiis eius ipsum unde blanditiis sunt et vel. Quas perferendis voluptate aut ratione exercitationem necessitatibus ullam dicta?</p>
+  <!-- =========================================================
+       CABEÇALHO FIXO
+       Logo à esquerda. No computador, os links aparecem na barra.
+       No celular e no tablet, aparece o botão hambúrguer.
+       ========================================================= -->
+  <header class="header" id="header">
+    <a href="#inicio" class="logo" aria-label="Daniel Santos Advocacia - voltar ao início" data-link-menu>
+      <img src="assets/logo-ds (1).png" alt="Daniel Santos Advocacia e Assessoria Jurídica" width="877" height="494">
+    </a>
+
+    <button class="menu-botao" id="menu-botao" type="button"
+            aria-label="Abrir menu" aria-expanded="false" aria-controls="menu">
+      <span class="menu-botao__linha"></span>
+      <span class="menu-botao__linha"></span>
+      <span class="menu-botao__linha"></span>
+    </button>
+  </header>
+
+  <!-- Fundo escuro atrás do menu aberto no celular (clicar nele fecha o menu) -->
+  <div class="menu-fundo" id="menu-fundo" hidden></div>
+
+  <!-- =========================================================
+       MENU
+       Celular e tablet: painel lateral que abre pelo hambúrguer.
+       Computador: links lado a lado no topo.
+       ========================================================= -->
+  <nav class="menu" id="menu" aria-label="Navegação principal">
+    <button class="menu__fechar" id="menu-fechar" type="button" aria-label="Fechar menu">
+      <span></span><span></span>
+    </button>
+
+    <ul class="menu__lista">
+      <li><a href="#inicio"      class="menu__link" data-link-menu>Início</a></li>
+      <li><a href="#sobre"       class="menu__link" data-link-menu>Sobre</a></li>
+      <li><a href="#areas"       class="menu__link" data-link-menu>Áreas de Atuação</a></li>
+      <li><a href="#contato"     class="menu__link" data-link-menu>Contato</a></li>
+    </ul>
+  </nav>
+
+  <main id="conteudo">
+
+    <!-- =========================================================
+         1. INÍCIO
+         ========================================================= -->
+    <section class="section section--dark hero" id="inicio">
+      <div class="container hero__grid">
+
+        <div class="hero__texto">
+          <h1 class="reveal">
+            <span class="hero__nome">Daniel Santos</span>
+            <span class="hero__escritorio">Advocacia e Assessoria Jurídica</span>
+          </h1>
+          <p class="hero__sub reveal">Orientação jurídica com ética, clareza e atenção a cada pessoa.</p>
+
+          <a class="btn btn--claro reveal"
+             href="https://wa.me/5588997990529?text=Ol%C3%A1%2C%20gostaria%20de%20conversar%20sobre%20um%20atendimento%20jur%C3%ADdico."
+             target="_blank" rel="noopener">
+            <svg class="icone-whatsapp" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2a9.9 9.9 0 0 0-8.5 14.9L2 22l5.25-1.37A9.9 9.9 0 1 0 12.04 2zm0 1.8a8.1 8.1 0 1 1-4.2 15.02l-.3-.18-3.1.8.83-3.03-.2-.31A8.1 8.1 0 0 1 12.04 3.8zM8.6 7.6c-.2 0-.5.07-.75.35-.26.27-1 .98-1 2.4s1.03 2.78 1.17 2.97c.15.2 2 3.2 4.95 4.35 2.45.96 2.95.77 3.48.72.53-.05 1.7-.7 1.94-1.37.24-.67.24-1.25.17-1.37-.07-.12-.27-.2-.56-.34-.3-.15-1.7-.84-1.97-.94-.27-.1-.46-.15-.66.15-.2.3-.76.94-.93 1.13-.17.2-.34.22-.63.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.6.13-.13.3-.34.44-.51.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.66-1.6-.9-2.18-.24-.57-.48-.5-.66-.5z"/></svg>
+            Falar pelo WhatsApp
+          </a>
+        </div>
+
+        
+
+      </div>
     </section>
 
-    <section class="three" id="three">
-    <h3>Áreas de Atuação</h3>
-    <div class="areas">
-        <article class="atuacao" id="previdenciario">
-            <img src="assets/consumidor.jpg" alt="Ícone de balança representando Direito Previdenciário">
-            <h4>Direito Previdenciário</h4>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora fuga itaque assumenda ipsum. Dolorem libero facere nihil? Obcaecati, sed, magnam nulla quas blanditiis doloremque iste nobis laboriosam voluptates mollitia vitae.</p>
-        </article>
+    <!-- =========================================================
+         2. SOBRE DANIEL SANTOS
+         ========================================================= -->
+    <section class="section section--light sobre" id="sobre">
+      <div class="container two-cols two-cols--center">
 
-        <article class="atuacao" id="consumidor">
-            <img src="assets/consumidor.jpg" alt="Ícone representando Direito do Consumidor">
-            <h4>Direito do Consumidor</h4>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora fuga itaque assumenda ipsum. Dolorem libero facere nihil? Obcaecati, sed, magnam nulla quas blanditiis doloremque iste nobis laboriosam voluptates mollitia vitae.</p>
-        </article>
+        <figure class="sobre__foto reveal">
+          <img src="assets/daniel-santos (1).jpg" alt="Daniel Santos, advogado, no escritório" width="1084" height="1355" loading="lazy">
+        </figure>
 
-        <article class="atuacao" id="civil">
-            <img src="assets/consumidor.jpg" alt="Ícone representando Direito Civil">
-            <h4>Direito Civil</h4>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora fuga itaque assumenda ipsum. Dolorem libero facere nihil? Obcaecati, sed, magnam nulla quas blanditiis doloremque iste nobis laboriosam voluptates mollitia vitae.</p>
-        </article>
-    </div>
-</section>
+        <div class="sobre__texto">
+          <h2 class="titulo reveal">Daniel Santos</h2>
+          <p class="sobre__cargo reveal">Advogado e fundador do escritório</p>
 
-    <div class="end" id="end">
+          <p class="reveal">À frente do escritório, Daniel Santos atua em Direito Civil, Direito do Consumidor e Direito Previdenciário, com atendimento direto e acompanhamento próximo de cada demanda.</p>
+          <p class="reveal">Seu trabalho começa pela escuta: entender a situação de cada pessoa, explicar os caminhos possíveis em linguagem simples e conduzir cada caso com ética, responsabilidade e respeito.</p>
+          <p class="reveal">O atendimento acontece no escritório, em Caririaçu - CE, ou pelo WhatsApp.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================
+         3. ÁREAS DE ATUAÇÃO
+         ========================================================= -->
+    <section class="section section--dark areas" id="areas">
+      <div class="container">
+        <h2 class="titulo titulo--branco reveal">Áreas de atuação</h2>
+        <p class="areas__intro reveal">Atendimento em três frentes do Direito, sempre com orientação clara sobre cada situação.</p>
+
+        <div class="cards">
+
+          <article class="card reveal">
+            <svg class="card__icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M7 21h10M5 7h14M5 7l-3 7a3 3 0 0 0 6 0L5 7zM19 7l-3 7a3 3 0 0 0 6 0l-3-7z"/></svg>
+            <h3>Direito Civil</h3>
+            <p>Orientação em contratos, responsabilidade civil, questões de família e sucessões e nas demais relações entre pessoas, no dia a dia.</p>
+          </article>
+
+          <article class="card reveal">
+            <svg class="card__icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6zM8.5 12l2.5 2.5 4.5-5"/></svg>
+            <h3>Direito do Consumidor</h3>
+            <p>Defesa de quem enfrenta cobranças indevidas, falhas na prestação de serviços, problemas com produtos ou contratos de consumo.</p>
+          </article>
+
+          <article class="card reveal">
+            <svg class="card__icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            <h3>Direito Previdenciário</h3>
+            <p>Atuação em demandas ligadas aos direitos previdenciários e aos benefícios do INSS, como aposentadorias, pensões e auxílios.</p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         4. NOSSO COMPROMISSO
+         ========================================================= -->
+    <section class="section section--light compromisso" id="compromisso">
+      <div class="container">
+        <h2 class="titulo titulo--centro reveal">Nosso compromisso com você</h2>
+        <p class="compromisso__intro reveal">Cada situação é única. Analisamos os fatos e orientamos com honestidade sobre os caminhos possíveis, sem promessas de resultado.</p>
+
+        <div class="valores">
+          <article class="valor reveal">
+            <h3>Ética e responsabilidade</h3>
+            <p>Atuação pautada pelas normas da profissão e pelo sigilo das informações de cada cliente.</p>
+          </article>
+          <article class="valor reveal">
+            <h3>Transparência</h3>
+            <p>Você acompanha o andamento da sua demanda e sabe o que esperar de cada etapa.</p>
+          </article>
+          <article class="valor reveal">
+            <h3>Atendimento humanizado</h3>
+            <p>Cada pessoa é ouvida com atenção, e cada situação é tratada de forma individual.</p>
+          </article>
+          <article class="valor reveal">
+            <h3>Dedicação</h3>
+            <p>Cada demanda recebe análise cuidadosa e acompanhamento próximo.</p>
+          </article>
+          <article class="valor reveal">
+            <h3>Clareza nas orientações</h3>
+            <p>Explicações em linguagem simples, sem termos técnicos desnecessários.</p>
+          </article>
+          <article class="valor reveal">
+            <h3>Respeito e confiança</h3>
+            <p>Uma relação construída com escuta, respeito e honestidade desde o primeiro contato.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================
+       5. RODAPÉ (endereço e e-mail)
+       ========================================================= -->
+  <footer class="footer" id="contato">
+    <div class="container">
+
+      <img class="footer__logo" src="assets/logo-ds (1).png" alt="Daniel Santos Advocacia e Assessoria Jurídica" width="877" height="494" loading="lazy">
+
+      <div class="footer__info">
+        <div>
+          <h3>Endereço</h3>
+          <address>
+            Rua José Nogueira, Nossa Senhora do Carmo<br>
+            Caririaçu - CE, CEP 63220-000
+          </address>
+          <a class="footer__mapa" target="_blank" rel="noopener"
+             href="https://www.google.com/maps/search/?api=1&query=Rua%20Jos%C3%A9%20Nogueira%2C%20Nossa%20Senhora%20do%20Carmo%2C%20Cariria%C3%A7u%20-%20CE%2C%2063220-000">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.6"/></svg>
+            Ver no Google Maps
+          </a>
+        </div>
+
+        <div>
+          <h3>E-mail</h3>
+          <!-- E-MAIL FICTÍCIO: troque nas DUAS partes (no href e no texto) pelo e-mail real -->
+          <a class="footer__email" href="mailto:contato@danielsantosadvocacia.com.br">contato@danielsantosadvocacia.com.br</a>
+        </div>
+      </div>
+
+      <div class="footer__base">
+        <p>© <span id="ano">2026</span> Daniel Santos Advocacia e Assessoria Jurídica. Todos os direitos reservados.</p>
        
 
-        <div class="horario-atendimento">
-            <h3>Horário de atendimento</h3>
-            <div class="item-horario">
-                <i class="fa-solid fa-clock"></i>
-                <div>
-                    <p>Seg - Sex</p>
-                    <p>8:00h - 12:00h</p>
-                    <p>14:00h - 17:00h</p>
-                    <p>Sáb – Dom</p>
-                    <p>Fechado</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="contato">
-            <h3>Contato</h3>
-            <div class="item-contato">
-                <i class="fa-brands fa-whatsapp"></i>
-                <a href="https://wa.me/5585326587000" target="_blank">(88) 9799-0529</a>
-            </div>
-            <div class="item-contato">
-                <i class="fa-solid fa-location-dot"></i>
-                <a href="https://maps.app.goo.gl/iQAhbCxfdgFQwEki9" target="_blank">
-                    Av. Engenheiro Luiz Vieira, nº 320<br>
-                    De Lourdes, CEP 60177-250<br>
-                    Fortaleza – Ceará
-                </a>
-            </div>
-        </div>
     </div>
+  </footer>
 
-    <script src="scripts.js"></script>
+  <script src="js/script.js"></script>
 </body>
 </html>
